@@ -1,0 +1,51 @@
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+
+class Solution {
+    //138. Copy List with Random Pointer
+    //Time complexity : O(n)
+    //Space complexity : O(n)
+    HashMap<Node,Node> map = new HashMap<>();
+    public Node copyRandomList(Node head) {
+        
+        if(head == null)
+            return head;
+      
+        Node copyHead = clone(head);
+        Node copyNode = copyHead;
+        Node curr = head;
+        
+        while(curr!=null){
+            Node copyNext = clone(curr.next);
+            Node copyRandom = clone(curr.random);
+            copyNode.next = copyNext;
+            copyNode.random = copyRandom;
+            copyNode = copyNode.next;
+            curr = curr.next;
+            
+        }
+        return copyHead;
+        
+    }
+    private Node clone(Node node){
+        if(node == null)
+            return null;
+        if(map.containsKey(node))
+            return map.get(node);
+        Node copy = new Node(node.val);
+        map.put(node,copy);
+        return copy;
+    }
+}
